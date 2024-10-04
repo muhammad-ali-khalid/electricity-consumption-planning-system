@@ -1,1 +1,1 @@
-# electricity-consumption-planning-system
+# Electricity Consumption Management System
