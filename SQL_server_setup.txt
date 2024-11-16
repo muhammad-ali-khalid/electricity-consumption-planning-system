@@ -1,0 +1,13 @@
+First Install Sql Server Express and SSMS
+
+Then write this command in cmd :
+
+sqllocaldb create "Server name here"
+
+Then Open SSMS , connect the Server instance and then Create A Db there
+
+Then In VS Community , Search "Server Explorer" and connect DB here with this command : 
+
+(localdb)/"your server name"
+
+and in DB option "DB name"
