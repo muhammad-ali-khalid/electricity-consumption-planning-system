@@ -1,5 +1,5 @@
 #pragma once
-
+#include "User.h"
 namespace ECPS {
 
 	using namespace System;
@@ -17,8 +17,10 @@ namespace ECPS {
 	public ref class Plan : public System::Windows::Forms::Form
 	{
 	public:
-		Plan(void)
+		User^ user = nullptr;
+		Plan(User^ user)
 		{
+			this->user = user;
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -28,8 +30,10 @@ namespace ECPS {
 				SqlConnection sqlConn(conn_str);
 				sqlConn.Open();
 
-				String^ query = "SELECT * FROM hardcoded_table;";
+				String^ query = "SELECT Appliance, Priority , no_of_hours , time FROM plan_data where Id = @id;";
 				SqlCommand^ command = gcnew SqlCommand(query, % sqlConn);
+				command->Parameters->AddWithValue("@id", user->id);
+
 
 				SqlDataAdapter^ adapter = gcnew SqlDataAdapter(command);
 				DataTable^ dataTable = gcnew DataTable();
@@ -138,11 +142,11 @@ namespace ECPS {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(323, 329);
+			this->dataGridView1->Location = System::Drawing::Point(653, 317);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->ReadOnly = true;
 			this->dataGridView1->RowHeadersWidth = 82;
-			this->dataGridView1->Size = System::Drawing::Size(1464, 432);
+			this->dataGridView1->Size = System::Drawing::Size(996, 424);
 			this->dataGridView1->TabIndex = 15;
 			// 
 			// Plan

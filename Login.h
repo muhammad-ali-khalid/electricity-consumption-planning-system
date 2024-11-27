@@ -299,6 +299,8 @@ namespace ECPS {
 		this->Close();
 
 	}
+	public: User^ user = gcnew User();
+	public: bool logged_in = false;
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ id = this->textBox1->Text;
 		String^ password = this->textBox2->Text;
@@ -319,9 +321,10 @@ namespace ECPS {
 
 			SqlDataReader^ reader = command->ExecuteReader();
 			if (reader->Read()) {
-				User^ user = gcnew User();
+				//User^ user = gcnew User();
 				user->id = reader->GetString(0);
 				user->password = reader->GetString(1);
+				logged_in = true;
 				this->Close();
 			}
 			else {

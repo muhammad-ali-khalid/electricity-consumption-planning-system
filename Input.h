@@ -1,5 +1,6 @@
 
 #pragma once
+#include "User.h"
 
 namespace ECPS {
 
@@ -9,6 +10,7 @@ namespace ECPS {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 	/// <summary>
 	/// Summary for Input
@@ -16,12 +18,23 @@ namespace ECPS {
 	public ref class Input : public System::Windows::Forms::Form
 	{
 	public:
-		Input(void)
+		User^ user = nullptr;
+		Input(User^ user)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
+			this->user = user;
+		}
+
+		Input()
+		{
+			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+
 		}
 
 	protected:
@@ -60,7 +73,8 @@ namespace ECPS {
 	private: System::Windows::Forms::Panel^ panel6;
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::ListBox^ listBox1;
+	private: System::Windows::Forms::ComboBox^ comboBox1;
+
 
 	protected:
 
@@ -85,7 +99,7 @@ namespace ECPS {
 			this->comboBox2 = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->panel4 = (gcnew System::Windows::Forms::Panel());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
@@ -153,9 +167,9 @@ namespace ECPS {
 			// comboBox2
 			// 
 			this->comboBox2->FormattingEnabled = true;
-			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(9) {
-				L"Fan", L"A.C", L"Light Bulb", L"Microwave", L"Refrigirater",
-					L"Iron", L"Washing Machine", L"Water Motor", L"T.V"
+			this->comboBox2->Items->AddRange(gcnew cli::array< System::Object^  >(8) {
+				L"Fan", L"A.C", L"Light Bulb", L"Microwave", L"Refrigerator",
+					L"Iron", L"Water Motor", L"T.V"
 			});
 			this->comboBox2->Location = System::Drawing::Point(32, 69);
 			this->comboBox2->Name = L"comboBox2";
@@ -176,24 +190,25 @@ namespace ECPS {
 			// 
 			// panel4
 			// 
-			this->panel4->Controls->Add(this->listBox1);
+			this->panel4->Controls->Add(this->comboBox1);
 			this->panel4->Controls->Add(this->label4);
 			this->panel4->Location = System::Drawing::Point(24, 512);
 			this->panel4->Margin = System::Windows::Forms::Padding(6);
 			this->panel4->Name = L"panel4";
-			this->panel4->Size = System::Drawing::Size(608, 241);
+			this->panel4->Size = System::Drawing::Size(608, 189);
 			this->panel4->TabIndex = 11;
 			// 
-			// listBox1
+			// comboBox1
 			// 
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->ItemHeight = 25;
-			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Morning", L"Afternoon", L"Evening", L"Night" });
-			this->listBox1->Location = System::Drawing::Point(50, 84);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->SelectionMode = System::Windows::Forms::SelectionMode::MultiSimple;
-			this->listBox1->Size = System::Drawing::Size(205, 104);
-			this->listBox1->TabIndex = 18;
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
+				L"Morning", L"Afternoon", L"Evening", L"Night",
+					L"24 hours (Complete day)"
+			});
+			this->comboBox1->Location = System::Drawing::Point(32, 96);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(315, 33);
+			this->comboBox1->TabIndex = 21;
 			// 
 			// label4
 			// 
@@ -203,9 +218,9 @@ namespace ECPS {
 			this->label4->Location = System::Drawing::Point(24, 17);
 			this->label4->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(410, 37);
+			this->label4->Size = System::Drawing::Size(568, 37);
 			this->label4->TabIndex = 2;
-			this->label4->Text = L"When you use this Appliance";
+			this->label4->Text = L"When do you prefer using this Appliance";
 			this->label4->Click += gcnew System::EventHandler(this, &Input::label4_Click);
 			// 
 			// button1
@@ -253,9 +268,9 @@ namespace ECPS {
 			this->button3->Location = System::Drawing::Point(56, 1035);
 			this->button3->Margin = System::Windows::Forms::Padding(6);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(420, 75);
+			this->button3->Size = System::Drawing::Size(576, 75);
 			this->button3->TabIndex = 14;
-			this->button3->Text = L"Add another response";
+			this->button3->Text = L"Save and Add another response";
 			this->button3->UseVisualStyleBackColor = false;
 			this->button3->Click += gcnew System::EventHandler(this, &Input::button3_Click);
 			// 
@@ -364,12 +379,106 @@ namespace ECPS {
 		this->Close();
 	}
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-		Input^ input = gcnew Input();
-		input->ShowDialog();
+
+		String^ appliance_name = comboBox2->Text;
+		String^ no_of_hrs = textBox3->Text;
+		String^ interval = comboBox1->Text;
+		String^ priority = textBox4->Text;
+		String^ interval_time = "";
+
+		if (priority != "High") {
+			interval = "Morning";
+		}
+
+		if (interval == "Morning") {
+			interval_time = "5AM - 12PM";
+		}
+		else if (interval == "Afternoon") {
+			interval_time = "12PM - 4PM";
+		}
+		else if (interval == "Evening") {
+			interval_time = "4PM - 7PM";
+		}
+		else if (interval == "Night") {
+			interval_time = "7PM - 4AM";
+		}
+		else {
+			interval_time = "24 hours";
+		}
+
+
+		try {
+			String^ conn_str = "Data Source=(localdb)\\ECPS;Initial Catalog=ECPS_db;Integrated Security=True";
+			SqlConnection sqlConn(conn_str);
+			sqlConn.Open();
+
+			String^ query = "Insert Into plan_data (ID , Priority , no_of_hours, section_of_day , Appliance, time) Values (@id , @priority , @hrs , @interval ,@appliance, @time)";
+			SqlCommand^ command = gcnew SqlCommand(query, % sqlConn);
+			command->Parameters->AddWithValue("@id", user->id);
+			command->Parameters->AddWithValue("@priority", priority);
+			command->Parameters->AddWithValue("@hrs", no_of_hrs);
+			command->Parameters->AddWithValue("@interval", interval);
+			command->Parameters->AddWithValue("@appliance", appliance_name);
+			command->Parameters->AddWithValue("@time", interval_time);
+
+			command->ExecuteNonQuery();
+		}
+		catch (Exception^ e) {
+			MessageBox::Show(e->Message);
+		}
+
+		Input^ input = gcnew Input(user);
 		this->Close();
+		input->WindowState = System::Windows::Forms::FormWindowState::Maximized;
+		input->ShowDialog();
+		
 	}
 	public: bool switch_to_dash = false;
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		
+		String^ appliance_name = comboBox2->Text;
+		String^ no_of_hrs = textBox3->Text;
+		String^ interval = comboBox1->Text;
+		String^ priority = textBox4->Text;
+		String^ interval_time = "";
+
+		if (priority != "High") {
+			interval = "Morning";
+		}
+
+		if (interval == "Morning") {
+			interval_time = "5AM - 12PM";
+		}
+		else if (interval == "Afternoon") {
+			interval_time = "12PM - 4PM";
+		}
+		else if (interval == "Evening") {
+			interval_time = "4PM - 7PM";
+		}
+		else if (interval == "Night") {
+			interval_time = "7PM - 4AM";
+		}
+
+		try {
+			String^ conn_str = "Data Source=(localdb)\\ECPS;Initial Catalog=ECPS_db;Integrated Security=True";
+			SqlConnection sqlConn(conn_str);
+			sqlConn.Open();
+
+			String^ query = "Insert Into plan_data (ID , Priority , no_of_hours, section_of_day , Appliance, time) Values (@id , @priority , @hrs , @interval ,@appliance, @time)";
+			SqlCommand^ command = gcnew SqlCommand(query, % sqlConn);
+			command->Parameters->AddWithValue("@id", user->id);
+			command->Parameters->AddWithValue("@priority", priority);
+			command->Parameters->AddWithValue("@hrs", no_of_hrs);
+			command->Parameters->AddWithValue("@interval", interval);
+			command->Parameters->AddWithValue("@appliance", appliance_name);
+			command->Parameters->AddWithValue("@time", interval_time);
+			command->ExecuteNonQuery();
+		}
+		catch (Exception^ e) {
+			MessageBox::Show(e->Message);
+		}
+
 		switch_to_dash = true;
 		this->Close();
 	}
