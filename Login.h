@@ -112,6 +112,7 @@ namespace ECPS {
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 1;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->UseWaitCursor = true;
 			this->pictureBox1->Click += gcnew System::EventHandler(this, &Login::pictureBox1_Click);
 			// 
 			// label2
@@ -324,6 +325,10 @@ namespace ECPS {
 				//User^ user = gcnew User();
 				user->id = reader->GetString(0);
 				user->password = reader->GetString(1);
+				user->budget = reader->GetInt32(5);
+				user->unit_range = reader->GetString(6);
+				user->expenses = reader->GetInt32(7);
+				user->location = reader->GetString(8);
 				logged_in = true;
 				this->Close();
 			}

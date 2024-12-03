@@ -30,7 +30,7 @@ namespace ECPS {
 				SqlConnection sqlConn(conn_str);
 				sqlConn.Open();
 
-				String^ query = "SELECT Appliance, Priority , no_of_hours , time FROM plan_data where Id = @id;";
+				String^ query = "SELECT t1.Appliance, t1.Priority, t1.no_of_hours, t1.time, t1.Expense from plan_data as t1 Where Id = @id";
 				SqlCommand^ command = gcnew SqlCommand(query, % sqlConn);
 				command->Parameters->AddWithValue("@id", user->id);
 
@@ -43,6 +43,26 @@ namespace ECPS {
 			catch (Exception^ e) {
 				MessageBox::Show(e->Message);
 			}
+
+			try {
+				String^ conn_str = "Data Source=(localdb)\\ECPS;Initial Catalog=ECPS_db;Integrated Security=True";
+				SqlConnection sqlConn(conn_str);
+				sqlConn.Open();
+
+				String^ query = "SELECT t1.Appliance, t1.Priority, t1.no_of_hours, t1.time, (t1.Expense * 30) as Monthly_expenses from plan_data as t1 Where Id = @id";
+				SqlCommand^ command = gcnew SqlCommand(query, % sqlConn);
+				command->Parameters->AddWithValue("@id", user->id);
+
+
+				SqlDataAdapter^ adapter = gcnew SqlDataAdapter(command);
+				DataTable^ dataTable = gcnew DataTable();
+				adapter->Fill(dataTable);
+				dataGridView2->DataSource = dataTable;
+			}
+			catch (Exception^ e) {
+				MessageBox::Show(e->Message);
+			}
+
 		}
 
 	protected:
@@ -72,6 +92,11 @@ namespace ECPS {
 
 
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::DataGridView^ dataGridView2;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label3;
+
 
 
 
@@ -99,9 +124,14 @@ namespace ECPS {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->panel2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel2
@@ -142,12 +172,61 @@ namespace ECPS {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(653, 317);
+			this->dataGridView1->Location = System::Drawing::Point(92, 464);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->ReadOnly = true;
 			this->dataGridView1->RowHeadersWidth = 82;
 			this->dataGridView1->Size = System::Drawing::Size(996, 424);
 			this->dataGridView1->TabIndex = 15;
+			// 
+			// button1
+			// 
+			this->button1->BackColor = System::Drawing::Color::DarkOrange;
+			this->button1->Font = (gcnew System::Drawing::Font(L"Georgia", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button1->Location = System::Drawing::Point(109, 1235);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(214, 81);
+			this->button1->TabIndex = 16;
+			this->button1->Text = L"Dashboard";
+			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &Plan::button1_Click);
+			// 
+			// dataGridView2
+			// 
+			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView2->Location = System::Drawing::Point(1256, 464);
+			this->dataGridView2->Name = L"dataGridView2";
+			this->dataGridView2->ReadOnly = true;
+			this->dataGridView2->RowHeadersWidth = 82;
+			this->dataGridView2->Size = System::Drawing::Size(996, 424);
+			this->dataGridView2->TabIndex = 17;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Franklin Gothic Medium", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label2->Location = System::Drawing::Point(95, 323);
+			this->label2->Margin = System::Windows::Forms::Padding(12, 0, 12, 0);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(319, 81);
+			this->label2->TabIndex = 18;
+			this->label2->Text = L"Daily Plan";
+			this->label2->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Franklin Gothic Medium", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(1251, 308);
+			this->label3->Margin = System::Windows::Forms::Padding(12, 0, 12, 0);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(405, 81);
+			this->label3->TabIndex = 19;
+			this->label3->Text = L"Monthly Plan";
+			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// Plan
 			// 
@@ -155,6 +234,10 @@ namespace ECPS {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(2564, 1399);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->dataGridView2);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->panel2);
 			this->Margin = System::Windows::Forms::Padding(6);
@@ -165,7 +248,9 @@ namespace ECPS {
 			this->panel2->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -177,5 +262,17 @@ namespace ECPS {
 	}
 	private: System::Void Plan_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
+	public: bool switch_to_dash = false;
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		switch_to_dash = true;
+		closing_the_plan();
+	}
+		   void closing_the_plan() {
+			   if (switch_to_dash) {
+				   this->Close();
+			   }
+	}
+private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }

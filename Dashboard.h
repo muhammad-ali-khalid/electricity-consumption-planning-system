@@ -185,7 +185,7 @@ namespace ECPS {
 		input->ShowDialog();
 	}
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-		Budget^ budget = gcnew Budget();
+		Budget^ budget = gcnew Budget(user);
 		budget->ShowDialog();
 	}
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
