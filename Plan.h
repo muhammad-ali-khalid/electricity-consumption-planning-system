@@ -188,5 +188,25 @@ namespace ECPS {
 
 
 #pragma endregion
+                	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
+	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+	}
+	private: System::Void Plan_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
+	public: bool switch_to_dash = false;
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		switch_to_dash = true;
+		closing_the_plan();
+	}
+		   void closing_the_plan() {
+			   if (switch_to_dash) {
+				   this->Close();
+			   }
+	}
+private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+}
     };
 }
