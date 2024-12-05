@@ -1,5 +1,5 @@
 #pragma once
-
+#include "User.h"
 namespace ECPS {
 
     using namespace System;
@@ -8,6 +8,7 @@ namespace ECPS {
     using namespace System::Windows::Forms;
     using namespace System::Data;
     using namespace System::Drawing;
+    using namespace System::Data::SqlClient;
 
     public ref class Plan : public System::Windows::Forms::Form
     {
