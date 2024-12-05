@@ -2,14 +2,13 @@
 #include "User.h"
 namespace ECPS {
 
-    using namespace System;
-    using namespace System::ComponentModel;
-    using namespace System::Collections;
-    using namespace System::Windows::Forms;
-    using namespace System::Data;
-    using namespace System::Drawing;
-    using namespace System::Data::SqlClient;
-
+	using namespace System;
+	using namespace System::ComponentModel;
+	using namespace System::Collections;
+	using namespace System::Windows::Forms;
+	using namespace System::Data;
+	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 
 	/// <summary>
@@ -228,9 +227,9 @@ namespace ECPS {
 			this->label3->TabIndex = 19;
 			this->label3->Text = L"Monthly Plan";
 			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-            // 
-            // Plan
-            // 
+			// 
+			// Plan
+			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
@@ -254,9 +253,8 @@ namespace ECPS {
 			this->PerformLayout();
 
 		}
-
 #pragma endregion
-                	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void tableLayoutPanel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
@@ -276,5 +274,5 @@ namespace ECPS {
 	}
 private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
 }
-    };
+};
 }
