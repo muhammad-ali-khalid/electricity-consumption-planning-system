@@ -165,5 +165,42 @@ namespace ECPS {
 
 		}
 #pragma endregion
+	private: System::Void panel2_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	}
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ units = textBox1->Text;
+	String^ budget = textBox2->Text;
+	int per_unit_price = 0;
+	String^ unit_range = "";
+	int budget_int = 0, units_int = 0;
+	if (budget != "" && units != "") {
+		budget_int = Convert::ToInt32(budget);
+		units_int = Convert::ToInt32(units);
+		if (1 <= units_int && units_int <= 100) {
+			per_unit_price = 12;
+			unit_range = "0-100";
+		}
+		else if (101 <= units_int && units_int <= 200) {
+			per_unit_price = 14;
+			unit_range = "101-200";
+		}
+		else if (201 <= units_int && units_int <= 300) {
+			per_unit_price = 31;
+			unit_range = "201-300";
+		}
+		else if (301 <= units_int <= 400) {
+			per_unit_price = 38;
+			unit_range = "301-400";
+		}
+		else if (401 <= units_int && units_int <= 500) {
+			per_unit_price = 41;
+			unit_range = "401-500";
+		}
+		else if (units_int >= 501) {
+			per_unit_price = 49;
+			unit_range = "Above 500";
+		}
+	}
+
 	};
 }
