@@ -202,5 +202,36 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		}
 	}
 
+	if (per_unit_price * units_int <= budget_int) {
+		try {
+
+			String^ conn_str = "Data Source=(localdb)\\ECPS;Initial Catalog=ECPS_db;Integrated Security=True";
+			SqlConnection sqlConn(conn_str);
+
+			sqlConn.Open();
+
+			String^ sqlQuery = "UPDATE Credentials SET Budget = @budget, Units_range = @unit_range WHERE Id = @username AND Password = @password";
+
+			SqlCommand^ command = gcnew SqlCommand(sqlQuery, % sqlConn);
+			command->Parameters->AddWithValue("@budget", budget_int);
+			command->Parameters->AddWithValue("@unit_range", unit_range);
+			command->Parameters->AddWithValue("@username", user->id);
+			command->Parameters->AddWithValue("@password", user->password);
+
+			MessageBox::Show(Convert::ToString(per_unit_price), "Budget Creation Failed", MessageBoxButtons::OK);
+
+			command->ExecuteNonQuery();
+
+			this->Close();
+
+		}
+		catch (Exception^ e) {
+			MessageBox::Show("Failed to Add Budget", "Budget Creation Failed", MessageBoxButtons::OK);
+		}
+	}
+	else {
+		MessageBox::Show("This Amount of Consumption is Impossible in the above budget.");
+	}
+}
 	};
 }
