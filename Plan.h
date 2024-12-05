@@ -170,22 +170,29 @@ namespace ECPS {
             // 
             // Plan
             // 
-            this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-            this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-            this->BackColor = System::Drawing::Color::White;
-            this->ClientSize = System::Drawing::Size(850, 500);
-            this->Controls->Add(this->dataGridViewPlan);
-            this->Controls->Add(this->panelHeader);
-            this->Name = L"Plan";
-            this->Text = L"Plan";
+			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::White;
+			this->ClientSize = System::Drawing::Size(2564, 1399);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->dataGridView2);
+			this->Controls->Add(this->button1);
+			this->Controls->Add(this->dataGridView1);
+			this->Controls->Add(this->panel2);
+			this->Margin = System::Windows::Forms::Padding(6);
+			this->Name = L"Plan";
+			this->Text = L"Plan";
+			this->Load += gcnew System::EventHandler(this, &Plan::Plan_Load);
+			this->panel2->ResumeLayout(false);
+			this->panel2->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
+			this->ResumeLayout(false);
+			this->PerformLayout();
 
-            this->panelHeader->ResumeLayout(false);
-            this->panelHeader->PerformLayout();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxIcon))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridViewPlan))->EndInit();
-            this->ResumeLayout(false);
-        }
-
+		}
 
 #pragma endregion
                 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
