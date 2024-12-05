@@ -1,8 +1,10 @@
+
 #pragma once
 
 #include "Input.h"
 #include "Budget.h"
 #include "Plan.h"
+#include "User.h"
 
 namespace ECPS {
 
@@ -19,8 +21,10 @@ namespace ECPS {
 	public ref class Dashboard : public System::Windows::Forms::Form
 	{
 	public:
-		Dashboard(void)
+		User^ user = nullptr;
+		Dashboard(User^ user)
 		{
+			this->user = user;
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -50,7 +54,7 @@ namespace ECPS {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -74,9 +78,10 @@ namespace ECPS {
 			// 
 			this->panel2->Controls->Add(this->label1);
 			this->panel2->Controls->Add(this->pictureBox1);
-			this->panel2->Location = System::Drawing::Point(479, 12);
+			this->panel2->Location = System::Drawing::Point(958, 23);
+			this->panel2->Margin = System::Windows::Forms::Padding(6, 6, 6, 6);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(377, 153);
+			this->panel2->Size = System::Drawing::Size(754, 294);
 			this->panel2->TabIndex = 11;
 			// 
 			// label1
@@ -84,10 +89,10 @@ namespace ECPS {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Franklin Gothic Medium", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(15, 9);
-			this->label1->Margin = System::Windows::Forms::Padding(6, 0, 6, 0);
+			this->label1->Location = System::Drawing::Point(30, 17);
+			this->label1->Margin = System::Windows::Forms::Padding(12, 0, 12, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(359, 37);
+			this->label1->Size = System::Drawing::Size(701, 81);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Welcome to Dashboard";
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
@@ -95,9 +100,10 @@ namespace ECPS {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(152, 59);
+			this->pictureBox1->Location = System::Drawing::Point(304, 113);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(6, 6, 6, 6);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(76, 80);
+			this->pictureBox1->Size = System::Drawing::Size(152, 154);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 1;
 			this->pictureBox1->TabStop = false;
@@ -110,9 +116,10 @@ namespace ECPS {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Georgia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::Black;
-			this->button1->Location = System::Drawing::Point(377, 257);
+			this->button1->Location = System::Drawing::Point(754, 494);
+			this->button1->Margin = System::Windows::Forms::Padding(6, 6, 6, 6);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(262, 39);
+			this->button1->Size = System::Drawing::Size(524, 75);
 			this->button1->TabIndex = 12;
 			this->button1->Text = L"Enter Appliance Details";
 			this->button1->UseVisualStyleBackColor = false;
@@ -126,9 +133,10 @@ namespace ECPS {
 			this->button3->Font = (gcnew System::Drawing::Font(L"Georgia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button3->ForeColor = System::Drawing::Color::Black;
-			this->button3->Location = System::Drawing::Point(702, 257);
+			this->button3->Location = System::Drawing::Point(1404, 494);
+			this->button3->Margin = System::Windows::Forms::Padding(6, 6, 6, 6);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(255, 39);
+			this->button3->Size = System::Drawing::Size(510, 75);
 			this->button3->TabIndex = 14;
 			this->button3->Text = L"Enter your Monthly Budget";
 			this->button3->UseVisualStyleBackColor = false;
@@ -142,9 +150,10 @@ namespace ECPS {
 			this->button4->Font = (gcnew System::Drawing::Font(L"Georgia", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button4->ForeColor = System::Drawing::Color::Black;
-			this->button4->Location = System::Drawing::Point(561, 400);
+			this->button4->Location = System::Drawing::Point(1122, 769);
+			this->button4->Margin = System::Windows::Forms::Padding(6, 6, 6, 6);
 			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(228, 43);
+			this->button4->Size = System::Drawing::Size(456, 83);
 			this->button4->TabIndex = 15;
 			this->button4->Text = L"Generate Plan";
 			this->button4->UseVisualStyleBackColor = false;
@@ -152,14 +161,15 @@ namespace ECPS {
 			// 
 			// Dashboard
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
-			this->ClientSize = System::Drawing::Size(1350, 729);
+			this->ClientSize = System::Drawing::Size(2564, 1399);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->panel2);
+			this->Margin = System::Windows::Forms::Padding(6, 6, 6, 6);
 			this->Name = L"Dashboard";
 			this->Text = L"Dashboard";
 			this->panel2->ResumeLayout(false);
@@ -170,16 +180,18 @@ namespace ECPS {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		Input^ input = gcnew Input();
+		Input^ input = gcnew Input(user);
+		input->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 		input->ShowDialog();
 	}
-private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-	Budget^ budget = gcnew Budget();
-	budget->ShowDialog();
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		Budget^ budget = gcnew Budget(user);
+		budget->ShowDialog();
 	}
-private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
-		Plan^ plan = gcnew Plan();
+	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+		Plan^ plan = gcnew Plan(user);
+		plan->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 		plan->ShowDialog();
 	}
-};
+	};
 }
