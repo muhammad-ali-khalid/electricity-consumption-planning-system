@@ -112,6 +112,7 @@ namespace ECPS {
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 1;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->UseWaitCursor = true;
 			this->pictureBox1->Click += gcnew System::EventHandler(this, &Login::pictureBox1_Click);
 			// 
 			// label2
@@ -299,6 +300,8 @@ namespace ECPS {
 		this->Close();
 
 	}
+	public: User^ user = gcnew User();
+	public: bool logged_in = false;
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ id = this->textBox1->Text;
 		String^ password = this->textBox2->Text;
@@ -319,9 +322,14 @@ namespace ECPS {
 
 			SqlDataReader^ reader = command->ExecuteReader();
 			if (reader->Read()) {
-				User^ user = gcnew User();
+				//User^ user = gcnew User();
 				user->id = reader->GetString(0);
 				user->password = reader->GetString(1);
+				user->budget = reader->GetInt32(5);
+				user->unit_range = reader->GetString(6);
+				user->expenses = reader->GetInt32(7);
+				user->location = reader->GetString(8);
+				logged_in = true;
 				this->Close();
 			}
 			else {
